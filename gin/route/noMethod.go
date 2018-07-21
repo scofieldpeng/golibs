@@ -9,5 +9,5 @@ import (
 
 // NoMethod 没有找到对应路由的 method 的 handler
 func NoMethod(ctx *gin.Context) {
-	ctx.JSON(http.StatusNotFound, response.NewErrMsg(104, "not found"))
+	ctx.JSON(http.StatusNotFound, response.NewErrData(104, "not found"))
 }

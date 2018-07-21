@@ -9,6 +9,6 @@ import (
 
 // NoFound 为没有找到对应路由的handler
 func NoFound(ctx *gin.Context) {
-	ctx.JSON(http.StatusNotFound, response.NewErrMsg(104, "not found"))
+	ctx.JSON(http.StatusNotFound, response.NewErrData(104, "not found"))
 	return
 }
