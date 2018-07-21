@@ -86,7 +86,7 @@ func (f *fileStdWriter) Init(dirPath ...string) {
 		if err := os.MkdirAll(f.dirPath,0655);err != nil {
 			fmt.Printf("\t|- 创建失败,error: %s \n",err.Error())
 		} else {
-			fmt.Printf("\t|- 创建成功")
+			fmt.Printf("\t|- 创建成功\n")
 		}
 	}
 
