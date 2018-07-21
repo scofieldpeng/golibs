@@ -82,7 +82,7 @@ func (f *fileStdWriter) Init(dirPath ...string) {
 
 
 	if _,err := os.Stat(f.dirPath);os.IsNotExist(err) {
-		fmt.Printf("日志目录(%s)不存在,自动创建",f.dirPath)
+		fmt.Printf("日志目录(%s)不存在,自动创建\n",f.dirPath)
 		if err := os.MkdirAll(f.dirPath,0755);err != nil {
 			fmt.Printf("\t|- 创建失败,error: %s \n",err.Error())
 		} else {
