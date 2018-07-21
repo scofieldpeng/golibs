@@ -34,7 +34,7 @@ func Recovery() gin.HandlerFunc {
 				request, _ := httputil.DumpRequest(ctx.Request, false)
 				log.GetLogger().Errorf("[Recovery]panic recovered:%s\t%s%s", string(request), err, stack)
 
-				ctx.JSON(http.StatusInternalServerError, response.NewErrMsg(105, "server error"))
+				ctx.JSON(http.StatusInternalServerError, response.NewErrData(105, "server error"))
 			}
 		}()
 		ctx.Next()
