@@ -8,7 +8,6 @@ import (
 	"errors"
 	"github.com/scofieldpeng/golibs/filepath"
 	"strings"
-	sysFilePath "path/filepath"
 )
 
 var (
