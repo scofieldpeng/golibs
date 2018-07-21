@@ -16,7 +16,7 @@ var (
 )
 
 // log初始化
-func Init(isDebug bool,filePath ...string) {
+func Init(isDebug bool, filePath ...string) {
 	logger = &logrus.Logger{}
 	logger.Formatter = &logrus.JSONFormatter{}
 	if isDebug {
@@ -54,10 +54,10 @@ type fileStdWriter struct {
 	file     *os.File
 }
 
-func newFileStdWriter() *fileStdWriter{
-	runDir,_ := filepath.GetRunDir()
+func newFileStdWriter() *fileStdWriter {
+	runDir, _ := filepath.GetRunDir()
 	return &fileStdWriter{
-		dirPath:runDir,
+		dirPath: runDir,
 	}
 }
 
@@ -77,7 +77,7 @@ func (f *fileStdWriter) Init(dirPath ...string) {
 		dirPath[0] = strings.TrimRight(dirPath[0], string(os.PathSeparator))
 	}
 
-	f.dirPath = dirPath[0]
+	f.dirPath = dirPath[0] + string(os.PathSeparator) + "log"
 	f.fileName = f.GenerateFileName()
 
 	go f.Rotate()
@@ -110,10 +110,10 @@ func (f *fileStdWriter) Rotate() {
 	nowTime := time.Now()
 	todayStartTime := time.Date(nowTime.Year(), nowTime.Month(), nowTime.Day(), 0, 0, 0, 0, time.Local).Unix()
 	sleepTime := 86400 - (nowTime.Unix() - todayStartTime)
-	for{
+	for {
 		f.GenerateFileName()
-		if err := f.LoadFile();err != nil {
-			fmt.Println("无法载入日志文件,err:" + err.Error() +",filename:" + f.dirPath + string(os.PathSeparator) + f.fileName)
+		if err := f.LoadFile(); err != nil {
+			fmt.Println("无法载入日志文件,err:" + err.Error() + ",filename:" + f.dirPath + string(os.PathSeparator) + f.fileName)
 			time.Sleep(5 * time.Second)
 			continue
 		}
@@ -129,11 +129,10 @@ func (f *fileStdWriter) Close() {
 
 // 写入内容
 func (f *fileStdWriter) Write(data []byte) (n int, err error) {
-	n,err = os.Stderr.Write(data)
+	n, err = os.Stderr.Write(data)
 	if f.file != nil {
-		n,err = f.file.Write(data)
+		n, err = f.file.Write(data)
 	}
 
 	return
 }
-
