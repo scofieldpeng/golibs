@@ -11,6 +11,16 @@ const (
 	SuccessCode = 0
 )
 
+// 服务器错误返回结构体
+func ServerError(ctx *gin.Context) {
+	ctx.JSON(http.StatusInternalServerError,NewErrData(106,"服务出错，请稍后重试"))
+}
+
+// 400错误返回结构体
+func BadRequest(ctx *gin.Context,code int,errMsg string,data ...interface{}) {
+	ctx.JSON(http.StatusBadRequest,NewErrData(code,errMsg,data...))
+}
+
 // Forbidden 非法访问错误
 func Forbidden(ctx *gin.Context, code int, errorMsg string, data ...interface{}) {
 	ctx.JSON(http.StatusForbidden, NewErrData(code, errorMsg, data...))
@@ -47,6 +57,15 @@ func NewData(code int, data interface{}, msg string) gin.H {
 		"data": data,
 		"msg":  msg,
 	}
+}
+
+// 新建成功消息返回结构体
+func NewSuccessData(data interface{},msg ...string) gin.H {
+	if len(msg) == 0 {
+		msg = make([]string,1)
+		msg[0] = ""
+	}
+	return NewData(SuccessCode,data,msg[0])
 }
 
 // 新建错误消息
