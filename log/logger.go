@@ -22,9 +22,9 @@ func Init(isDebug bool, filePath ...string) {
 	if isDebug {
 		logger.Formatter = &logrus.TextFormatter{}
 		logger.Out = os.Stdout
-		logger.SetLevel(logrus.InfoLevel)
-	} else {
 		logger.SetLevel(logrus.DebugLevel)
+	} else {
+		logger.SetLevel(logrus.InfoLevel)
 		writer.Init(filePath...)
 		logger.Out = writer
 	}
