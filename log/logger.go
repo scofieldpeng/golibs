@@ -80,11 +80,10 @@ func (f *fileStdWriter) Init(dirPath ...string) {
 	f.dirPath = dirPath[0] + string(os.PathSeparator) + "log"
 	f.fileName = f.GenerateFileName()
 
-
-	if _,err := os.Stat(f.dirPath);os.IsNotExist(err) {
-		fmt.Printf("日志目录(%s)不存在,自动创建\n",f.dirPath)
-		if err := os.MkdirAll(f.dirPath,0755);err != nil {
-			fmt.Printf("\t|- 创建失败,error: %s \n",err.Error())
+	if _, err := os.Stat(f.dirPath); os.IsNotExist(err) {
+		fmt.Printf("日志目录(%s)不存在,自动创建\n", f.dirPath)
+		if err := os.MkdirAll(f.dirPath, 0755); err != nil {
+			fmt.Printf("\t|- 创建失败,error: %s \n", err.Error())
 		} else {
 			fmt.Printf("\t|- 创建成功\n")
 		}
