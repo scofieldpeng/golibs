@@ -18,6 +18,7 @@ func NewServer(opt ...grpc.ServerOption) *grpc.Server {
 		interceptor.ServerLoggerInterceptor(),
 	), ), grpc.StreamInterceptor(grpc_middleware.ChainStreamServer(
 		grpc_recovery.StreamServerInterceptor(),
+		interceptor.ServerStreamLoggerInterceptor(),
 	)))
 
 	opt = append(opt, grpc.ConnectionTimeout(time.Second*time.Duration(10)))
