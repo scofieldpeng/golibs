@@ -1,18 +1,23 @@
 package log
 
 import (
-	"github.com/sirupsen/logrus"
-	"fmt"
-	"os"
-	"time"
 	"errors"
+	"fmt"
+	"github.com/gin-gonic/gin"
 	"github.com/scofieldpeng/golibs/filepath"
+	"github.com/sirupsen/logrus"
+	"os"
 	"strings"
+	"time"
 )
 
 var (
 	logger = &logrus.Logger{}
 	writer = newFileStdWriter()
+)
+
+const (
+	RequestIdKey = "X-REQUEST-ID"
 )
 
 // log初始化
@@ -33,6 +38,18 @@ func Init(isDebug bool, filePath ...string) {
 // 获取logrus.Logger
 func GetLogger() *logrus.Logger {
 	return logger
+}
+
+// 获取logrus的entry实例
+func WithGin(ctx *gin.Context) *logrus.Entry {
+	entry := logger.WithContext(ctx)
+	if requestKey, ok := ctx.Get(RequestIdKey); ok {
+		if requestId, ok := requestKey.(string); ok {
+			entry = entry.WithField("request_id", requestId)
+		}
+	}
+
+	return entry
 }
 
 // 获取writer
@@ -80,11 +97,10 @@ func (f *fileStdWriter) Init(dirPath ...string) {
 	f.dirPath = dirPath[0] + string(os.PathSeparator) + "log"
 	f.fileName = f.GenerateFileName()
 
-
-	if _,err := os.Stat(f.dirPath);os.IsNotExist(err) {
-		fmt.Printf("日志目录(%s)不存在,自动创建\n",f.dirPath)
-		if err := os.MkdirAll(f.dirPath,0755);err != nil {
-			fmt.Printf("\t|- 创建失败,error: %s \n",err.Error())
+	if _, err := os.Stat(f.dirPath); os.IsNotExist(err) {
+		fmt.Printf("日志目录(%s)不存在,自动创建\n", f.dirPath)
+		if err := os.MkdirAll(f.dirPath, 0755); err != nil {
+			fmt.Printf("\t|- 创建失败,error: %s \n", err.Error())
 		} else {
 			fmt.Printf("\t|- 创建成功\n")
 		}

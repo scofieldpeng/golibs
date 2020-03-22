@@ -13,8 +13,8 @@ import (
 
 	"net/http"
 
-	"github.com/scofieldpeng/golibs/gin/response"
 	"github.com/gin-gonic/gin"
+	"github.com/scofieldpeng/golibs/gin/response"
 	"github.com/scofieldpeng/golibs/log"
 )
 

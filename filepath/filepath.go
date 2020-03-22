@@ -20,6 +20,6 @@ func GetRunDir() (dir string, err error) {
 }
 
 // 获取当前所在的目录，这个建议开发时使用，尤其是go run这种
-func GetCurrentPwd() (dir string, err error){
+func GetCurrentPwd() (dir string, err error) {
 	return os.Getwd()
 }

@@ -1,9 +1,9 @@
 package gin
 
 import (
+	"github.com/gin-gonic/gin"
 	"github.com/scofieldpeng/golibs/gin/response"
 	"github.com/scofieldpeng/golibs/gin/route"
-	"github.com/gin-gonic/gin"
 )
 
 func New() *gin.Engine {

@@ -3,8 +3,8 @@ package gin
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/scofieldpeng/golibs/log"
-	"time"
 	"github.com/sirupsen/logrus"
+	"time"
 )
 
 // Logger logger中间件
